@@ -729,6 +729,7 @@ class ExportBackend:
             # Fallback: try direct import path
             try:
                 import sys, os as _os
+
                 sys.path.insert(0, str(Path(__file__).resolve().parents[4]))
                 from unsloth.save import save_to_vllm_4bit
             except ImportError as exc:
@@ -744,19 +745,19 @@ class ExportBackend:
                 ensure_dir(Path(save_directory))
 
                 save_to_vllm_4bit(
-                    model_or_path=self.current_model,
-                    tokenizer=self.current_tokenizer,
-                    output_dir=save_directory,
-                    export_format=export_format,
-                    bits=bits,
-                    group_size=group_size,
-                    iters=iters,
-                    nsamples=nsamples,
-                    dataset=dataset,
-                    push_to_hub=push_to_hub,
-                    repo_id=repo_id,
-                    token=hf_token,
-                    private=private,
+                    model_or_path = self.current_model,
+                    tokenizer = self.current_tokenizer,
+                    output_dir = save_directory,
+                    export_format = export_format,
+                    bits = bits,
+                    group_size = group_size,
+                    iters = iters,
+                    nsamples = nsamples,
+                    dataset = dataset,
+                    push_to_hub = push_to_hub,
+                    repo_id = repo_id,
+                    token = hf_token,
+                    private = private,
                 )
 
                 self._write_export_metadata(save_directory)
@@ -766,23 +767,21 @@ class ExportBackend:
                 # Hub-only (no local save) — save to tmp first
                 import tempfile
 
-                with tempfile.TemporaryDirectory(
-                    prefix="_unsloth_vllm4bit_"
-                ) as tmp:
+                with tempfile.TemporaryDirectory(prefix = "_unsloth_vllm4bit_") as tmp:
                     save_to_vllm_4bit(
-                        model_or_path=self.current_model,
-                        tokenizer=self.current_tokenizer,
-                        output_dir=tmp,
-                        export_format=export_format,
-                        bits=bits,
-                        group_size=group_size,
-                        iters=iters,
-                        nsamples=nsamples,
-                        dataset=dataset,
-                        push_to_hub=True,
-                        repo_id=repo_id,
-                        token=hf_token,
-                        private=private,
+                        model_or_path = self.current_model,
+                        tokenizer = self.current_tokenizer,
+                        output_dir = tmp,
+                        export_format = export_format,
+                        bits = bits,
+                        group_size = group_size,
+                        iters = iters,
+                        nsamples = nsamples,
+                        dataset = dataset,
+                        push_to_hub = True,
+                        repo_id = repo_id,
+                        token = hf_token,
+                        private = private,
                     )
 
             fmt_label = {
